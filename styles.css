@@ -1,0 +1,329 @@
+:root {
+    --bg: #f6f7fb;
+    --card: #ffffff;
+    --primary: #2563eb;
+    --muted: #6b7280;
+    --accent: #f8fafc;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg);
+    color: #111827;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background-color: var(--card);
+    padding: 22px;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+}
+
+h1 {
+    text-align: center;
+    color: #111827;
+    font-weight: 600;
+    margin: 0;
+}
+
+.filters {
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}
+
+select,
+input[type="text"],
+.btn {
+    padding: 8px 10px;
+    border: 1px solid #e6e9ee;
+    border-radius: 6px;
+    background: white;
+    font-size: 14px;
+}
+
+.btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.btn:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+}
+
+.btn.secondary {
+    background: white;
+    color: var(--primary);
+    border: 1px solid #e6e9ee;
+}
+
+.chart-container {
+    margin-top: 20px;
+}
+
+.chart {
+    width: 100%;
+    height: 420px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(16, 24, 40, 0.03);
+}
+
+th,
+td {
+    border-bottom: 1px solid #f1f5f9;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f8fafc;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    font-weight: 600;
+}
+
+tbody tr:hover {
+    background: #fbfdff;
+}
+
+
+/* Tooltip simple styles */
+
+.tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+
+/* Header and logo */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    position: relative;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    padding-left: 56px;
+    /* leave space for absolute logo */
+    position: relative;
+}
+
+.brand>div {
+    flex: 1;
+    text-align: center;
+}
+
+.logo {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo svg {
+    width: 36px;
+    height: 36px;
+    fill: #355;
+}
+
+.user-status {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+h1 {
+    margin: 0;
+}
+
+
+/* Pagination controls */
+
+.pagination {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.pagination button {
+    margin: 0;
+    padding: 6px 10px;
+}
+
+
+/* Summary cards */
+
+.cards {
+    display: flex;
+    gap: 12px;
+    margin: 12px 0 6px;
+    justify-content: center;
+}
+
+.card {
+    background: var(--accent);
+    padding: 10px 14px;
+    border-radius: 8px;
+    min-width: 120px;
+    text-align: center;
+    box-shadow: 0 1px 0 rgba(16, 24, 40, 0.03);
+}
+
+.card-title {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.card-value {
+    font-weight: 700;
+    font-size: 18px;
+    margin-top: 6px;
+}
+
+
+/* Expand button in table */
+
+.expand-btn {
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #e6e9ee;
+    background: white;
+    cursor: pointer;
+}
+
+.detail-row td {
+    background: #fbfdff;
+    color: #111827;
+}
+
+
+/* Responsiveness */
+
+@media (max-width:700px) {
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    .cards {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .card {
+        width: 100%;
+    }
+}
+
+
+/* Footer timestamp animation */
+
+.last-updated {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+#lastUpdated {
+    display: inline-block;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#lastUpdated.flash {
+    animation: fadeInUp 360ms cubic-bezier(.2, .9, .3, 1);
+}
+
+
+/* Loss styles */
+
+.card.loss {
+    background: #fff4f4;
+    border: 1px solid rgba(185, 28, 28, 0.06);
+    color: #991b1b;
+    cursor: pointer;
+}
+
+.card.loss .card-title {
+    color: #9a1b1b;
+}
+
+.loss-section {
+    background: #fff;
+    border: 1px solid #f1e7e7;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+#lossTable tbody tr td {
+    padding: 8px;
+    border-bottom: 1px solid #fbf0f0;
+}
+
+#lossTable tbody tr:hover {
+    background: #fff7f7;
+}
+
+.loss-value {
+    color: #b91c1c;
+    font-weight: 700;
+}
+
+
+/* Row highlight for loss items */
+
+.row-loss td {
+    background: linear-gradient(90deg, rgba(255, 230, 230, 0.5), rgba(255, 247, 247, 0.6));
+}
+
+.row-loss {
+    border-left: 4px solid rgba(185, 28, 28, 0.12);
+}

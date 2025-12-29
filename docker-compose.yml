@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: salesdb
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+  web:
+    build: .
+    command: gunicorn -w 4 -b 0.0.0.0:5000 backend.app:app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/salesdb
+      FLASK_ENV: development
+      JWT_SECRET_KEY: change-me
+      ADMIN_PASSWORD: adminpass
+    ports:
+      - '5000:5000'
+    volumes:
+      - .:/app
+volumes:
+  db_data: {}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Assessment Dashboard</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23355'/%3E%3Ctext x='50' y='56' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3E%F0%9F%93%88%3C/text%3E%3C/svg%3E">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .filters {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .chart-container {
+            margin-top: 20px;
+        }
+        .chart {
+            width: 100%;
+            height: 400px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="brand">
+                <div class="logo">📈</div>
+                <div>
+                    <h1>Sales Assessment Dashboard</h1>
+                    <div style="font-size:12px;color:var(--muted)">Interactive sales overview • <strong>Company Demo</strong></div>
+                </div>
+            </div>
+            <div class="user-status" id="userStatus">Demo</div>
+        </div>
+        <div class="filters">
+            <label for="categoryFilter">Filter by Category:</label>
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+            </select>
+
+            <label for="searchInput">Search:</label>
+            <input id="searchInput" type="text" placeholder="Search product, category, sales, revenue..." />
+
+            <button id="addMoreBtn">Add More Products</button>
+            <button id="exportCsvBtn">Export CSV</button>
+        </div>
+        <div class="chart-container">
+            <svg class="chart" id="salesChart"></svg>
+        </div>
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Sales</th>
+                    <th>Category</th>
+                    <th>Revenue</th>
+                    <th>Profit</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div class="pagination" id="paginationControls"></div>
+    </div>
+
+    <div id="tooltip" class="tooltip" style="display:none;"></div>
+
+    <script>
+        let allData = [];
+        let filteredData = [];
+        let expansionCount = 0;
+        let newlyAdded = [];
+        let sortColumn = null;
+        let sortAsc = true;
+
+        // Pagination
+        let currentPage = 1;
+        const pageSize = 10;
+
+        // No auth required in this prototype
+
+        // Simple banner logging (no server health checks in prototype)
+        function showBanner(message, level='warn'){ console.log('BANNER', level, message); }
+        function hideBanner(){}
+
+        function renderPagination() {
+            const total = filteredData.length;
+            const pages = Math.max(1, Math.ceil(total / pageSize));
+            const container = document.getElementById('paginationControls');
+            container.innerHTML = '';
+            const prev = document.createElement('button'); prev.textContent='Prev'; prev.disabled = currentPage<=1; prev.addEventListener('click', ()=>{ currentPage = Math.max(1,currentPage-1); updateTable(); });
+            const info = document.createElement('div'); info.textContent = `Page ${currentPage} / ${pages}`;
+            const next = document.createElement('button'); next.textContent='Next'; next.disabled = currentPage>=pages; next.addEventListener('click', ()=>{ currentPage = Math.min(pages, currentPage+1); updateTable(); });
+            container.appendChild(prev); container.appendChild(info); container.appendChild(next);
+        }
+
+        // ensure filters reset page
+        function resetPage() { currentPage = 1; }
+
+        // Fetch data from backend (with fallback sample data)
+        async function fetchData() {
+            const initialData = [ /* ... */ ];
+            filteredData = [...allData];
+            populateFilters();
+            updateChart();
+            updateTable();
+        }
+
+        // Event listeners
+        document.getElementById('categoryFilter').addEventListener('change', filterData);
+        document.getElementById('searchInput').addEventListener('input', filterData);
+        document.getElementById('addMoreBtn').addEventListener('click', addMoreProducts);
+        document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
+
+        // Initialize
+        setupTableSorting();
+        fetchData();
+    </script>
+</body>
+</html>

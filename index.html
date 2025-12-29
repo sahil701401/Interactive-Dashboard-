@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Assessment Dashboard</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23355'/%3E%3Ctext x='50' y='56' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3E%F0%9F%93%88%3C/text%3E%3C/svg%3E">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="brand">
+                <div class="logo" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sales icon"><rect x="3" y="12" width="4" height="9"></rect><rect x="9" y="7" width="4" height="14"></rect><rect x="15" y="4" width="4" height="17"></rect></svg>
+                </div>
+                <div>
+                    <h1>Sales Assessment Dashboard</h1>
+                    <div style="font-size:12px;color:var(--muted)">Interactive sales overview • <strong>Your Personalized Sales Hub</strong></div>
+                    <div style="font-size:14px;color:var(--text);margin-top:4px;">Hey there! Ready to explore your sales data? Let's turn numbers into stories. (Warning: May cause sudden insights!)</div>
+                    <div style="font-size:12px;color:var(--muted);margin-top:2px;font-style:italic;">"Data tells a story – let's listen."</div>
+                </div>
+            </div>
+            <div class="user-status" id="userStatus"></div>
+        </div>
+        <div class="filters">
+            <label for="categoryFilter">Filter by Category:</label>
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+            </select>
+
+            <label for="searchInput">Search:</label>
+            <input id="searchInput" type="text" placeholder="Search product, category, sales, revenue..." />
+
+            <div class="controls-inline">
+                <label class="control-inline"><input id="lossOnlyToggle" type="checkbox" /> Loss only</label>
+                <label class="control-inline"><input id="exportFormatted" type="checkbox" checked /> Export formatted (INR)</label>
+                <label class="control-inline" for="localeSelect">Currency:</label>
+                <select id="localeSelect" class="small-select">
+                    <option value="en-IN">INR (₹)</option>
+                    <option value="en-US">USD ($)</option>
+                    <option value="en-GB">GBP (£)</option>
+                </select>
+                <button id="shareViewBtn" class="btn secondary">Share view</button>
+            </div>
+
+            <button id="addMoreBtn">Add More Products</button>
+            <button id="exportCsvBtn">Export CSV</button>
+        </div>
+
+        <div class="cards" id="summaryCards" aria-hidden="false">
+            <div class="card"><div class="card-title">Products</div><div class="card-value" id="cardProducts">—</div></div>
+            <div class="card"><div class="card-title">Total Sales</div><div class="card-value" id="cardSales">—</div></div>
+            <div class="card"><div class="card-title">Revenue</div><div class="card-value" id="cardRevenue">—</div></div>
+            <div class="card loss" id="lossCard" role="button" tabindex="0" aria-pressed="false" title="Click to view loss-making products this year"><div class="card-title">Losses</div><div class="card-value" id="cardLosses">—</div></div>
+        </div>
+
+        <div id="lossSection" class="loss-section" style="display:none; margin-bottom:10px;" aria-hidden="true">
+            <h3 style="margin:6px 0 8px; font-size:14px;">Loss-making products this year</h3>
+            <table id="lossTable" style="width:100%; border-collapse:collapse;">
+                <thead>
+                    <tr><th style="text-align:left;padding:8px;border-bottom:1px solid #eef2f7;">Product</th><th style="text-align:left;padding:8px;border-bottom:1px solid #eef2f7;">Category</th><th style="text-align:right;padding:8px;border-bottom:1px solid #eef2f7;">Loss</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="chart-container">
+            <svg class="chart" id="salesChart"></svg>
+        </div>
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Product</th>
+                    <th>Sales</th>
+                    <th>Category</th>
+                    <th>Revenue</th>
+                    <th>Profit</th>
+                    <th>Loss</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div class="pagination" id="paginationControls"></div>
+        <footer class="footer" style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid #eef2f7">
+            <div class="last-updated">Last updated: <span id="lastUpdated">—</span></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;">
+                <button id="refreshBtn" class="btn">Refresh</button>
+                <div style="font-size:12px;color:var(--muted);margin-top:4px;">Built with passion for data-driven insights</div>
+            </div>
+        </footer>
+    </div>
+
+    <div id="tooltip" class="tooltip" style="display:none;"></div>
+
+    <!-- Load the optimized external script (single source of truth) -->
+    <script src="main.js"></script>
+
+    <!-- main.js handles event wiring and initialization -->
+
+
+
+    <!-- All page behavior consolidated in external main.js -->
+
+
+    <!-- main.js handles event wiring and initialization -->
+</body>
+</html>
